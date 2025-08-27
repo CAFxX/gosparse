@@ -17,6 +17,8 @@ type Hole struct {
 //
 // All holes are processed, and any errors encountered
 // are collected and returned as a single error at the end.
+//
+// PunchHoles may modify the contents of the holes slice.
 func PunchHoles(holes []Hole) error {
 	if len(holes) == 0 {
 		return nil // No holes to punch
@@ -41,7 +43,7 @@ func (e punchHoleError) Unwrap() error {
 
 func punchHolesFallback(holes []Hole) error {
 	var errs []error
-	for _, hole := range holes {
+	for _, hole := range punchHolesOpt(holes) {
 		if err := PunchHole(hole.Fd, hole.Offset, hole.Size); err != nil {
 			errs = append(errs, punchHoleError{hole: hole, err: err})
 		}
