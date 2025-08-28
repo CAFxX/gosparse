@@ -10,6 +10,8 @@ Quick sanity check:
 ```bash
 while IFS=/ read -r os arch; do
     echo $os/$arch
-    GOOS=$os GOARCH=$arch go build
+    GOOS=$os GOARCH=$arch go build -trimpath -o obj
+    GOOS=$os GOARCH=$arch go tool objdump -s '[Pp]unchHole' obj > $os-$arch.asm
+    rm obj
 done < <(go tool dist list)
 ```
