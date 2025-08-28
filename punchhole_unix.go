@@ -1,6 +1,6 @@
 //go:build darwin || freebsd || ios
 
-package sparse
+package gosparse
 
 import (
 	"syscall"

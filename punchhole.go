@@ -1,4 +1,4 @@
-package sparse
+package gosparse
 
 // PunchHole deallocates a range of a file.
 // The arguments fd, offset, and size are the file descriptor,

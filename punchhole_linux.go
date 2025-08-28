@@ -1,6 +1,6 @@
 //go:build linux || android || illumos
 
-package sparse
+package gosparse
 
 import (
 	"golang.org/x/sys/unix"

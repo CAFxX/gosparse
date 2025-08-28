@@ -1,6 +1,6 @@
 //go:build !linux && !darwin && !freebsd && !windows && !solaris && !illumos && !android && !ios
 
-package sparse
+package gosparse
 
 import "errors"
 

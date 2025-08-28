@@ -1,4 +1,4 @@
-package sparse
+package gosparse
 
 import (
 	"cmp"

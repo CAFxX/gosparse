@@ -1,6 +1,6 @@
 //go:build windows
 
-package sparse
+package gosparse
 
 import (
 	"syscall"

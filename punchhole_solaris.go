@@ -1,6 +1,6 @@
 //go:build solaris
 
-package sparse
+package gosparse
 
 import (
 	"syscall"

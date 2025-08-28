@@ -1,6 +1,6 @@
-//go:build linux
+//go:build linux && iouring
 
-package sparse
+package gosparse
 
 import (
 	"errors"

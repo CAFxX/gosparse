@@ -1,6 +1,6 @@
-//go:build !linux
+//go:build !linux || !iouring
 
-package sparse
+package gosparse
 
 func punchHoles(holes []Hole) error {
 	return punchHolesFallback(holes)
