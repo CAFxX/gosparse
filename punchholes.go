@@ -17,15 +17,13 @@ type Hole struct {
 //
 // All holes are processed, and any errors encountered
 // are collected and returned as a single error at the end.
-//
-// PunchHoles may modify the contents of the holes slice.
 func PunchHoles(holes []Hole) error {
 	if len(holes) == 0 {
 		return nil // No holes to punch
 	} else if len(holes) == 1 {
 		return punchHole(holes[0].Fd, holes[0].Offset, holes[0].Size)
 	}
-	return punchHoles(punchHolesOpt(holes))
+	return punchHoles(holes)
 }
 
 type punchHoleError struct {
@@ -43,7 +41,7 @@ func (e punchHoleError) Unwrap() error {
 
 func punchHolesFallback(holes []Hole) error {
 	var errs []error
-	for _, hole := range punchHolesOpt(holes) {
+	for _, hole := range holes {
 		if err := PunchHole(hole.Fd, hole.Offset, hole.Size); err != nil {
 			errs = append(errs, punchHoleError{hole: hole, err: err})
 		}
@@ -51,7 +49,11 @@ func punchHolesFallback(holes []Hole) error {
 	return errors.Join(errs...)
 }
 
-func punchHolesOpt(holes []Hole) []Hole {
+// OptimizeHoles merges any overlapping or contiguous holes contained in the slice,
+// so that the smallest possible number of PunchHole operations is needed.
+//
+// OptimizeHoles may modify the contents of the slice.
+func OptimizeHoles(holes []Hole) []Hole {
 	if len(holes) <= 1 {
 		return holes
 	}
@@ -68,6 +70,5 @@ func punchHolesOpt(holes []Hole) []Hole {
 			holes[i] = holes[j]
 		}
 	}
-	holes = holes[:i+1]
-	return holes
+	return holes[:i+1]
 }
