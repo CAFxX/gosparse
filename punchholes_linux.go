@@ -35,7 +35,7 @@ func punchHoles(holes []Hole) error {
 			unix.FALLOC_FL_PUNCH_HOLE|unix.FALLOC_FL_KEEP_SIZE,
 			hole.Offset,
 			hole.Size,
-		).WithInfo(idx)
+		).WithInfo(&holes[idx])
 		rs = append(rs, r)
 	}
 
@@ -54,8 +54,8 @@ func punchHoles(holes []Hole) error {
 	errs := make([]error, 0, nerr)
 	for _, r := range req.Requests() {
 		if err := r.Err(); err != nil {
-			hole := holes[r.GetRequestInfo().(int)]
-			errs = append(errs, punchHoleError{hole: hole, err: err})
+			holePtr := r.GetRequestInfo().(*Hole)
+			errs = append(errs, punchHoleError{hole: *holePtr, err: err})
 		}
 	}
 
