@@ -1,4 +1,4 @@
-//go:build !linux && !darwin && !freebsd && !windows && !solaris && !illumos && !android && !ios
+//go:build !linux && !darwin && !windows && !solaris && !illumos && !android && !ios
 
 package gosparse
 

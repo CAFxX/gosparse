@@ -1,4 +1,4 @@
-//go:build darwin || freebsd || ios
+//go:build darwin || ios
 
 package gosparse
 
@@ -9,7 +9,7 @@ import (
 	"golang.org/x/sys/unix"
 )
 
-// punchHole deallocates a range of a file on Darwin (macOS) and FreeBSD.
+// punchHole deallocates a range of a file on Darwin (macOS) and iOS.
 // It uses the fcntl system call with the F_PUNCHHOLE command.
 func punchHole(fd int, offset int64, size int64) error {
 	_, _, errno := syscall.Syscall(
